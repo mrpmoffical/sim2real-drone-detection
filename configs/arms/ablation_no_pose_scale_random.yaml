@@ -1,0 +1,8 @@
+name: ablation_no_pose_scale_random
+description: "RQ4 ablasyonu: poz/ölçek randomizasyonu KAPALI sentetik ön-eğitim + 250 gerçek. Diğer faktörler açık."
+hypothesis_refs: [H3]
+data:
+  pretrain: synth
+  pretrain_count: null
+  train_source: real
+  real_count: 250

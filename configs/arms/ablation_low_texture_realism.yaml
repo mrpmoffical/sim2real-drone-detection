@@ -1,0 +1,8 @@
+name: ablation_low_texture_realism
+description: "RQ4 ablasyonu: doku gerçekçiliği KAPALI sentetik ön-eğitim + 250 gerçek. Diğer faktörler açık."
+hypothesis_refs: [H3]
+data:
+  pretrain: synth
+  pretrain_count: null
+  train_source: real
+  real_count: 250

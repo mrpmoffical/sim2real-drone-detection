@@ -1,0 +1,8 @@
+name: ablation_no_bg_variation
+description: "RQ4 ablasyonu: arka plan çeşitliliği KAPALI sentetik ön-eğitim + 250 gerçek. Diğer faktörler açık."
+hypothesis_refs: [H3]
+data:
+  pretrain: synth
+  pretrain_count: null
+  train_source: real
+  real_count: 250

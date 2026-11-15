@@ -1,0 +1,6 @@
+name: real_only_50
+description: "Taban eğrisi noktası: 50 gerçek görüntü, sentetik yok."
+hypothesis_refs: [H1, H2]
+data:
+  train_source: real
+  real_count: 50

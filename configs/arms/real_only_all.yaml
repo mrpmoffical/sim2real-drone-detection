@@ -1,0 +1,6 @@
+name: real_only_all
+description: "Mevcut tüm gerçek eğitim verisi, sentetik yok (eğrinin üst ucu)."
+hypothesis_refs: [H1]
+data:
+  train_source: real
+  real_count: null

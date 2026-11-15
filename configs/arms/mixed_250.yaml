@@ -1,0 +1,7 @@
+name: mixed_250
+description: "Sentetik + 250 gerçek birlikte (tek aşama). Alternatif birleştirme stratejisi."
+hypothesis_refs: [H1]
+data:
+  train_source: mixed
+  real_count: 250
+  synth_count: null

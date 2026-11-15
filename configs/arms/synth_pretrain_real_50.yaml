@@ -1,0 +1,8 @@
+name: synth_pretrain_real_50
+description: "Sentetik ön-eğitim -> 50 gerçek görüntü ile ince ayar."
+hypothesis_refs: [H1, H2, H4]
+data:
+  pretrain: synth
+  pretrain_count: null
+  train_source: real
+  real_count: 50
