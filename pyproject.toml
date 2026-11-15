@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "miragebench"
+version = "0.1.0"
+description = "Küçük İHA/drone tespitinde sentetik eğitim verisinin gerçek veri açığını ne kadar kapattığını ölçen kontrollü benchmark"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "mrpmoffical" }]
+keywords = ["computer-vision", "object-detection", "synthetic-data", "domain-gap", "sim2real", "uav-detection"]
+dependencies = [
+    "numpy>=1.24",
+    "opencv-python-headless>=4.8",
+    "pillow>=10.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.5",
+    "imagehash>=4.3",
+    "tqdm>=4.65",
+]
+
+[project.optional-dependencies]
+# Blender bir Python modülü olarak kurulur (pip install bpy). Üretici ayrıca
+# harici bir `blender` çalıştırılabiliriyle de çalışır; bpy yoksa ona düşer.
+synth = ["bpy>=4.0"]
+# Eğitim ve çıkarım (GPU gerektirir, bu repoda dağıtılan donanımda çalıştırılır).
+train = ["ultralytics>=8.3.0", "torch>=2.1", "sahi>=0.11"]
+# Grafikler ve rapor.
+report = ["matplotlib>=3.7", "pandas>=2.0"]
+dev = ["pytest>=7.4", "ruff>=0.4", "mypy>=1.8"]
+
+[project.scripts]
+mb-synth = "miragebench.synth.cli:main"
+mb-ingest = "miragebench.data.cli:main"
+mb-eval = "miragebench.eval.cli:main"
+mb-run = "miragebench.experiment.cli:main"
+mb-report = "miragebench.report.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["miragebench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "blender: bpy modülü veya bir Blender çalıştırılabiliri gerektirir",
+    "slow: uzun süren test",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+# Kod tabanı ve yorumlar bilinçli olarak Türkçe; ambiguous-unicode kuralları
+# (ı, ş, ç vb.) yüzlerce yanlış pozitif üretir, bu yüzden kapatılır.
+ignore = ["RUF001", "RUF002", "RUF003"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_ignores = true
+ignore_missing_imports = true

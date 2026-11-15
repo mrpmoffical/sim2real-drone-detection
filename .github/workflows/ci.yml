@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Çekirdek bağımlılıkları kur (GPU'suz)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[report,dev]"
+          pip install pycocotools   # mAP çapraz-doğrulama testi için
+      - name: Lint
+        run: ruff check miragebench tests
+      - name: Testler (yavaş Blender render hariç)
+        run: |
+          pytest tests/ -q \
+            --deselect tests/test_blender_smoke.py::test_render_one_bbox_bounds_drone

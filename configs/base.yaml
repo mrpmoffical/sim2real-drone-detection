@@ -1,0 +1,38 @@
+# Tüm deney kollarınca paylaşılan SABİT temel yapılandırma.
+# Burayı değiştirmek TÜM kolları etkiler; bir koşu dizisi içinde değiştirmeyin.
+# Gerekçe: kontrollü deney (docs/RESEARCH.md §7).
+
+project: miragebench
+classes: [drone]
+
+size_buckets:
+  small_max: 32     # alan < 32² px -> small
+  medium_max: 96    # alan < 96² px -> medium, üstü large
+
+model:
+  arch: yolo11s
+  imgsz: 1280
+  sahi_enabled: false
+  sahi_slice: 640
+  sahi_overlap: 0.2
+
+train:
+  epochs: 100
+  batch: 16
+  optimizer: auto
+  lr0: 0.01
+  patience: 20
+  augment_preset: small_object_v1
+  # Kollar arası eşitlenmiş optimizer adımı bütçesi. Az-veri kollarında epoch
+  # sayısı otomatik ölçeklenir ki toplam adım sabit kalsın (experiment runner).
+  total_steps: 40000
+
+split:
+  train: 0.80
+  val: 0.15
+  test: 0.05
+  group_aware: true
+  group_regex: '^(?P<group>.*?)(?:_frame|_f|_)\d+'
+  seed: 0
+
+seeds: [0, 1, 2]

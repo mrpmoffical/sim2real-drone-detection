@@ -1,0 +1,6 @@
+name: synth_only
+description: "Sıfır-gerçek: yalnız sentetik ile eğitim. Domain gap tavanını ölçer."
+hypothesis_refs: [H2, H3]
+data:
+  train_source: synth
+  synth_count: null   # mevcut tüm sentetik veri

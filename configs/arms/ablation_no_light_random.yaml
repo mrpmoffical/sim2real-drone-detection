@@ -1,0 +1,11 @@
+name: ablation_no_light_random
+description: "RQ4 ablasyonu: ışık randomizasyonu KAPALI sentetik ön-eğitim + 250 gerçek. Diğer tüm faktörler açık."
+hypothesis_refs: [H3]
+data:
+  pretrain: synth
+  pretrain_count: null
+  train_source: real
+  real_count: 250
+# Ablasyon faktörü sentetik veri ÜRETİMİNDE uygulanır. Üretici bu kol için
+# FactorSwitches.from_name("no_light_random") ile çağrılmalıdır; runner kol adının
+# 'ablation_' ön ekini görüp faktörü çıkarır.
