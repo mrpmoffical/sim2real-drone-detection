@@ -1,5 +1,8 @@
 # MirageBench
 
+**🔗 Canlı pano:** https://mrpmoffical.github.io/sim2real-drone-detection/
+
+
 **Küçük İHA/drone tespitinde sentetik eğitim verisinin gerçek veri açığını ne kadar
 kapattığını ölçen kontrollü bir benchmark.**
 
