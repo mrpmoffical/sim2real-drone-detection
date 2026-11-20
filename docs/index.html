@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MirageBench — Sonuç Panosu</title>
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --panel2:#1c2330; --border:#2d3748;
+    --fg:#e6edf3; --muted:#9aa7b4; --accent:#58a6ff; --accent2:#f78166;
+    --good:#3fb950; --bad:#f85149; --grid:#21262d;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1100px;margin:0 auto;padding:28px 20px 60px}
+  h1{font-size:26px;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 24px;font-size:14px}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:28px}
+  .tile{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:16px}
+  .tile .v{font-size:28px;font-weight:700}
+  .tile .l{color:var(--muted);font-size:12.5px;margin-top:4px}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:22px}
+  .panel h2{font-size:16px;margin:0 0 4px}
+  .panel .note{color:var(--muted);font-size:13px;margin:0 0 14px}
+  .toggle{display:inline-flex;gap:6px;margin-bottom:10px}
+  .toggle button{background:var(--panel2);color:var(--muted);border:1px solid var(--border);
+    border-radius:8px;padding:5px 11px;cursor:pointer;font-size:13px}
+  .toggle button.on{background:var(--accent);color:#06101f;border-color:var(--accent);font-weight:600}
+  svg{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:18px;margin-top:8px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{padding:7px 9px;text-align:right;border-bottom:1px solid var(--grid)}
+  th:first-child,td:first-child{text-align:left}
+  th{color:var(--muted);font-weight:600;cursor:pointer;user-select:none}
+  tbody tr:hover{background:var(--panel2)}
+  .bar{height:9px;border-radius:5px;background:var(--accent);display:inline-block;vertical-align:middle}
+  .hyp{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .hcard{background:var(--panel2);border:1px solid var(--border);border-radius:10px;padding:14px}
+  .hcard .t{font-weight:700;margin-bottom:4px}
+  .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:600}
+  .ok{background:rgba(63,185,80,.15);color:var(--good)}
+  .no{background:rgba(248,81,73,.15);color:var(--bad)}
+  .hcard .d{color:var(--muted);font-size:12.5px;margin-top:6px}
+  .tt{position:fixed;pointer-events:none;background:#000d;border:1px solid var(--border);
+    border-radius:8px;padding:7px 10px;font-size:12.5px;opacity:0;transition:opacity .08s;z-index:9}
+  footer{color:var(--muted);font-size:12.5px;margin-top:30px;border-top:1px solid var(--border);padding-top:16px}
+  a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>MirageBench — Sonuç Panosu</h1>
+  <p class="sub">Küçük drone tespitinde sentetik verinin gerçek veri açığını ne kadar kapattığını ölçen benchmark · DUT Anti-UAV test seti · YOLOv11s</p>
+
+  <div class="tiles" id="tiles"></div>
+
+  <div class="panel">
+    <h2>Veri verimliliği</h2>
+    <p class="note">Gerçek görüntü sayısı (N) arttıkça başarı. Sentetik ön-eğitimin katkısı az-veri rejiminde en yüksek.</p>
+    <div class="toggle" id="metricToggle"></div>
+    <div id="lineChart"></div>
+    <div class="legend">
+      <span><span class="dot" style="background:#58a6ff"></span>Gerçek-only</span>
+      <span><span class="dot" style="background:#f78166"></span>Sentetik ön-eğitim + gerçek</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Boyut katmanına göre sentetik katkısı (N=50)</h2>
+    <p class="note">Sentetik ön-eğitimin, sentetiksiz-50'ye göre puan kazancı. En kıt rejimde küçük nesnede kazanç çok büyük.</p>
+    <div id="sizeChart"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Ablasyon — domain randomization faktör önemi</h2>
+    <p class="note">Her faktör kapatıldığında referansa (synth_pretrain_real_250) göre mAP@50 düşüşü. N=250'de sentetik zaten doyduğu için farklar küçük (bkz. FINDINGS §4).</p>
+    <div id="ablChart"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Tüm kollar</h2>
+    <p class="note">Başlığa tıklayarak sırala. Bar = mAP@50.</p>
+    <table id="tbl"><thead></thead><tbody></tbody></table>
+  </div>
+
+  <div class="panel">
+    <h2>Hipotez kararları</h2>
+    <div class="hyp" id="hyp"></div>
+  </div>
+
+  <footer>
+    Otomatik üretildi · <span id="meta"></span> · Kaynak: <a href="https://github.com/mrpmoffical/sim2real-drone-detection">sim2real-drone-detection</a>
+    · Tek tohum sonuçları; varyans için 3 tohumla tekrar önerilir (FINDINGS §7).
+  </footer>
+</div>
+
+<div class="tt" id="tt"></div>
+<script>
+const DATA = {"rows": [{"arm": "ablation_low_texture_realism", "n_real": 250, "n_synth": 3000, "map50": 0.783, "map50_95": 0.498, "small": 0.854, "medium": 0.807, "large": 0.643, "seeds": 1}, {"arm": "ablation_no_bg_variation", "n_real": 250, "n_synth": 3000, "map50": 0.796, "map50_95": 0.515, "small": 0.873, "medium": 0.814, "large": 0.66, "seeds": 1}, {"arm": "ablation_no_light_random", "n_real": 250, "n_synth": 3000, "map50": 0.8, "map50_95": 0.515, "small": 0.857, "medium": 0.819, "large": 0.683, "seeds": 1}, {"arm": "ablation_no_pose_scale_random", "n_real": 250, "n_synth": 3000, "map50": 0.773, "map50_95": 0.45, "small": 0.857, "medium": 0.814, "large": 0.55, "seeds": 1}, {"arm": "mixed_250", "n_real": 250, "n_synth": 4000, "map50": 0.643, "map50_95": 0.405, "small": 0.738, "medium": 0.678, "large": 0.47, "seeds": 1}, {"arm": "real_only_100", "n_real": 100, "n_synth": 0, "map50": 0.589, "map50_95": 0.333, "small": 0.775, "medium": 0.652, "large": 0.172, "seeds": 1}, {"arm": "real_only_1000", "n_real": 1000, "n_synth": 0, "map50": 0.923, "map50_95": 0.617, "small": 0.949, "medium": 0.934, "large": 0.872, "seeds": 1}, {"arm": "real_only_250", "n_real": 250, "n_synth": 0, "map50": 0.819, "map50_95": 0.499, "small": 0.876, "medium": 0.845, "large": 0.669, "seeds": 1}, {"arm": "real_only_50", "n_real": 50, "n_synth": 0, "map50": 0.039, "map50_95": 0.026, "small": 0.003, "medium": 0.007, "large": 0.198, "seeds": 1}, {"arm": "real_only_500", "n_real": 500, "n_synth": 0, "map50": 0.856, "map50_95": 0.561, "small": 0.905, "medium": 0.864, "large": 0.761, "seeds": 1}, {"arm": "real_only_all", "n_real": null, "n_synth": 0, "map50": 0.948, "map50_95": 0.654, "small": 0.958, "medium": 0.958, "large": 0.922, "seeds": 1}, {"arm": "synth_only", "n_real": 0, "n_synth": 4000, "map50": 0.387, "map50_95": 0.222, "small": 0.479, "medium": 0.376, "large": 0.274, "seeds": 1}, {"arm": "synth_pretrain_real_100", "n_real": 100, "n_synth": 4000, "map50": 0.67, "map50_95": 0.404, "small": 0.763, "medium": 0.699, "large": 0.482, "seeds": 1}, {"arm": "synth_pretrain_real_1000", "n_real": 1000, "n_synth": 4000, "map50": 0.901, "map50_95": 0.613, "small": 0.924, "medium": 0.908, "large": 0.872, "seeds": 1}, {"arm": "synth_pretrain_real_250", "n_real": 250, "n_synth": 4000, "map50": 0.772, "map50_95": 0.495, "small": 0.846, "medium": 0.81, "large": 0.632, "seeds": 1}, {"arm": "synth_pretrain_real_50", "n_real": 50, "n_synth": 4000, "map50": 0.543, "map50_95": 0.309, "small": 0.681, "medium": 0.579, "large": 0.248, "seeds": 1}, {"arm": "synth_pretrain_real_500", "n_real": 500, "n_synth": 4000, "map50": 0.868, "map50_95": 0.591, "small": 0.905, "medium": 0.872, "large": 0.819, "seeds": 1}], "real_curve": [{"n": 50, "map50": 0.039, "map50_95": 0.026, "small": 0.003}, {"n": 100, "map50": 0.589, "map50_95": 0.333, "small": 0.775}, {"n": 250, "map50": 0.819, "map50_95": 0.499, "small": 0.876}, {"n": 500, "map50": 0.856, "map50_95": 0.561, "small": 0.905}, {"n": 1000, "map50": 0.923, "map50_95": 0.617, "small": 0.949}], "synth_curve": [{"n": 50, "map50": 0.543, "map50_95": 0.309, "small": 0.681}, {"n": 100, "map50": 0.67, "map50_95": 0.404, "small": 0.763}, {"n": 250, "map50": 0.772, "map50_95": 0.495, "small": 0.846}, {"n": 500, "map50": 0.868, "map50_95": 0.591, "small": 0.905}, {"n": 1000, "map50": 0.901, "map50_95": 0.613, "small": 0.924}], "ablation": [{"factor": "low_texture_realism", "map50": 0.783, "drop": -0.011}, {"factor": "no_bg_variation", "map50": 0.796, "drop": -0.024}, {"factor": "no_light_random", "map50": 0.8, "drop": -0.028}, {"factor": "no_pose_scale_random", "map50": 0.773, "drop": -0.001}], "size_gain_50": {"small": 0.678, "medium": 0.572, "large": 0.05}, "size_gain_250": {"small": -0.03, "medium": -0.035, "large": -0.037}, "hypotheses": [{"hypothesis": "H1", "verdict": "desteklendi", "detail": "N<=250'de en büyük kazanım 50.4 puan (N=50)", "pairs": [{"N": 100, "synth_pretrain": 0.67, "real_only": 0.589, "gain_pts": 8.1}, {"N": 250, "synth_pretrain": 0.772, "real_only": 0.819, "gain_pts": -4.7}, {"N": 50, "synth_pretrain": 0.543, "real_only": 0.039, "gain_pts": 50.4}]}, {"hypothesis": "H2", "verdict": "desteklendi", "detail": "synth_only mAP@50=0.387, en iyi real_only=0.948, açık=56.1 puan"}, {"hypothesis": "H3", "verdict": "desteklenmedi", "detail": "en önemli faktör 'no_pose_scale_random'; sıralama=[('no_pose_scale_random', -0.001), ('low_texture_realism', -0.011), ('no_bg_variation', -0.024), ('no_light_random', -0.028)]"}, {"hypothesis": "H4", "verdict": "desteklenmedi", "detail": "boyut başına kazanım (puan)={'small': -2.5, 'medium': -2.6, 'large': 0.0}; en yüksek=large"}], "key": {"domain_gap": 0.561, "synth_only": 0.387, "best_real": 0.948, "gain_at_50": 0.504, "small_gain_at_50": 0.678, "n_arms": 17, "n_runs": 17}};
+const $ = s => document.querySelector(s);
+const tt = $('#tt');
+function showTip(e,html){tt.innerHTML=html;tt.style.opacity=1;tt.style.left=(e.clientX+14)+'px';tt.style.top=(e.clientY+14)+'px';}
+function hideTip(){tt.style.opacity=0;}
+const fmt = v => (v==null?'–':(+v).toFixed(3));
+const pts = v => (v>=0?'+':'')+(v*100).toFixed(1);
+
+/* ---- tiles ---- */
+(function(){
+  const k=DATA.key;
+  const tiles=[
+    ['Domain gap', k.domain_gap!=null?pts(k.domain_gap)+' p':'–','sadece-sentetik vs en iyi gerçek (mAP@50)'],
+    ['N=50 kazancı', k.gain_at_50!=null?pts(k.gain_at_50)+' p':'–','sentetik ön-eğitim vs gerçek-only'],
+    ['N=50 küçük nesne', k.small_gain_at_50!=null?pts(k.small_gain_at_50)+' p':'–','küçük-nesne mAP@50 kazancı'],
+    ['En iyi gerçek', fmt(k.best_real),'real_only (tüm veri) mAP@50'],
+    ['Koşu / kol', k.n_runs+' / '+k.n_arms,'tamamlanan deney'],
+  ];
+  $('#tiles').innerHTML=tiles.map(t=>`<div class="tile"><div class="v">${t[1]}</div><div class="l"><b>${t[0]}</b><br>${t[2]}</div></div>`).join('');
+})();
+
+/* ---- line chart (data efficiency) ---- */
+let metric='map50';
+const W=900,H=380,P={l:56,r:20,t:18,b:46};
+function xlog(n,min,max){return P.l+(Math.log10(n)-Math.log10(min))/(Math.log10(max)-Math.log10(min))*(W-P.l-P.r);}
+function ylin(v){return H-P.b-(v-0)/(1-0)*(H-P.t-P.b);}
+function drawLine(){
+  const all=DATA.real_curve.concat(DATA.synth_curve).map(p=>p.n);
+  const nmin=Math.min(...all), nmax=Math.max(...all);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img">`;
+  // grid + y labels
+  for(let i=0;i<=5;i++){const v=i/5;const y=ylin(v);
+    s+=`<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="var(--grid)"/>`;
+    s+=`<text x="${P.l-8}" y="${y+4}" fill="var(--muted)" font-size="12" text-anchor="end">${v.toFixed(1)}</text>`;}
+  // x ticks at actual N
+  [...new Set(all)].sort((a,b)=>a-b).forEach(n=>{const x=xlog(n,nmin,nmax);
+    s+=`<text x="${x}" y="${H-P.b+18}" fill="var(--muted)" font-size="12" text-anchor="middle">${n}</text>`;});
+  s+=`<text x="${(P.l+W-P.r)/2}" y="${H-6}" fill="var(--muted)" font-size="12.5" text-anchor="middle">Gerçek eğitim görüntüsü (log ölçek)</text>`;
+  s+=`<text transform="translate(16 ${(P.t+H-P.b)/2}) rotate(-90)" fill="var(--muted)" font-size="12.5" text-anchor="middle">${metric}</text>`;
+  function series(arr,color){
+    if(!arr.length)return'';
+    let d='',dots='';
+    arr.forEach((p,i)=>{const x=xlog(p.n,nmin,nmax),y=ylin(p[metric]);
+      d+=(i?'L':'M')+x+' '+y+' ';
+      dots+=`<circle cx="${x}" cy="${y}" r="4.5" fill="${color}" stroke="#0d1117" stroke-width="1.5"
+        onmousemove="showTip(event,'N=${p.n}<br>${metric}: <b>${fmt(p[metric])}</b>')" onmouseleave="hideTip()"/>`;});
+    return `<path d="${d}" fill="none" stroke="${color}" stroke-width="2.5"/>`+dots;
+  }
+  s+=series(DATA.real_curve,'#58a6ff');
+  s+=series(DATA.synth_curve,'#f78166');
+  s+=`</svg>`;
+  $('#lineChart').innerHTML=s;
+}
+(function(){
+  const metrics=[['map50','mAP@50'],['map50_95','mAP@50-95'],['small','küçük nesne mAP@50']];
+  $('#metricToggle').innerHTML=metrics.map(m=>`<button data-m="${m[0]}" class="${m[0]==metric?'on':''}">${m[1]}</button>`).join('');
+  $('#metricToggle').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    metric=b.dataset.m;
+    $('#metricToggle').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.m==metric));
+    drawLine();});
+  drawLine();
+})();
+
+/* ---- horizontal bar helper ---- */
+function hbars(el,items,opt){
+  const w=900,bh=30,gap=10,pl=180,pr=70,h=items.length*(bh+gap)+10;
+  const vals=items.map(i=>i.v);
+  const lo=Math.min(0,...vals), hi=Math.max(0,...vals);
+  const span=(hi-lo)||1;
+  const zx=pl+(0-lo)/span*(w-pl-pr);
+  let s=`<svg viewBox="0 0 ${w} ${h}">`;
+  s+=`<line x1="${zx}" y1="0" x2="${zx}" y2="${h-10}" stroke="var(--border)"/>`;
+  items.forEach((it,i)=>{const y=i*(bh+gap)+6;
+    const x=pl+(Math.min(0,it.v)-lo)/span*(w-pl-pr);
+    const bw=Math.abs(it.v)/span*(w-pl-pr);
+    const col=it.color||(it.v>=0?'var(--accent)':'var(--bad)');
+    s+=`<text x="${pl-10}" y="${y+bh/2+4}" fill="var(--fg)" font-size="13" text-anchor="end">${it.label}</text>`;
+    s+=`<rect x="${x}" y="${y}" width="${Math.max(1,bw)}" height="${bh}" rx="5" fill="${col}"
+        onmousemove="showTip(event,'${it.label}<br><b>${it.disp}</b>')" onmouseleave="hideTip()"/>`;
+    s+=`<text x="${x+ (it.v>=0?bw+8:-8)}" y="${y+bh/2+4}" fill="var(--muted)" font-size="12.5"
+        text-anchor="${it.v>=0?'start':'end'}">${it.disp}</text>`;});
+  s+=`</svg>`;el.innerHTML=s;
+}
+
+/* size gain N=50 */
+(function(){
+  const g=DATA.size_gain_50||{};
+  const order=['small','medium','large'], names={small:'küçük',medium:'orta',large:'büyük'};
+  const cols={small:'#3fb950',medium:'#58a6ff',large:'#8957e5'};
+  const items=order.filter(k=>g[k]!=null).map(k=>({label:names[k],v:g[k],disp:pts(g[k])+' p',color:cols[k]}));
+  if(items.length)hbars($('#sizeChart'),items); else $('#sizeChart').innerHTML='<p class="note">veri yok</p>';
+})();
+
+/* ablation */
+(function(){
+  const a=(DATA.ablation||[]).filter(x=>x.drop!=null).sort((x,y)=>y.drop-x.drop);
+  const items=a.map(x=>({label:x.factor,v:x.drop,disp:pts(x.drop)+' p',color:'#f78166'}));
+  if(items.length)hbars($('#ablChart'),items); else $('#ablChart').innerHTML='<p class="note">ablasyon kolu yok</p>';
+})();
+
+/* table */
+(function(){
+  const cols=[['arm','Kol'],['n_real','Gerçek'],['n_synth','Sentetik'],['map50','mAP@50'],
+    ['map50_95','mAP@50-95'],['small','küçük'],['medium','orta'],['large','büyük']];
+  $('#tbl thead').innerHTML='<tr>'+cols.map(c=>`<th data-k="${c[0]}">${c[1]}</th>`).join('')+'</tr>';
+  let rows=DATA.rows.slice(), sortK='map50', dir=-1;
+  const maxMap=Math.max(...rows.map(r=>r.map50||0));
+  function render(){
+    rows.sort((a,b)=>{const x=a[sortK],y=b[sortK];
+      if(typeof x==='string')return dir*x.localeCompare(y);
+      return dir*(((x==null?-1:x))-((y==null?-1:y)));});
+    $('#tbl tbody').innerHTML=rows.map(r=>{
+      const barw=(r.map50||0)/maxMap*70;
+      return `<tr>
+        <td>${r.arm}</td><td>${r.n_real==null?'tümü':r.n_real}</td><td>${r.n_synth||0}</td>
+        <td><span class="bar" style="width:${barw}px"></span> ${fmt(r.map50)}</td>
+        <td>${fmt(r.map50_95)}</td><td>${fmt(r.small)}</td><td>${fmt(r.medium)}</td><td>${fmt(r.large)}</td></tr>`;}).join('');
+  }
+  $('#tbl thead').querySelectorAll('th').forEach(th=>th.onclick=()=>{
+    const k=th.dataset.k; if(k===sortK)dir*=-1; else {sortK=k;dir=-1;} render();});
+  render();
+})();
+
+/* hypotheses */
+(function(){
+  $('#hyp').innerHTML=(DATA.hypotheses||[]).map(h=>{
+    const ok=h.verdict==='desteklendi';
+    return `<div class="hcard"><div class="t">${h.hypothesis}
+      <span class="badge ${ok?'ok':'no'}">${h.verdict}</span></div>
+      <div class="d">${h.detail||''}</div></div>`;}).join('');
+})();
+
+$('#meta').textContent = DATA.key.n_runs+' koşu · '+DATA.key.n_arms+' kol';
+</script>
+</body>
+</html>
