@@ -165,7 +165,7 @@ pytest tests/ -q        # 42 test
 
 ---
 
-## Kapsam ve sınırlar (dürüst)
+## Kapsam ve sınırlar
 
 - Sonuçlar seçilen gerçek sete özgü olabilir; en az iki kaynakta çapraz doğrulama
   önerilir (gelecek iş).
