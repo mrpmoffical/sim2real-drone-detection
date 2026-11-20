@@ -87,13 +87,15 @@ def train_stage(
         optimizer=optimizer,
         patience=patience,
         seed=seed,
+        device=0,
         project=str(project_dir),
         name=name,
         exist_ok=True,
         verbose=False,
         **aug,
     )
-    weights = Path(project_dir) / name / "weights" / "best.pt"
+    best = getattr(getattr(model, "trainer", None), "best", None)
+    weights = Path(best) if best else Path(project_dir) / name / "weights" / "best.pt"
     return TrainResult(weights, epochs, n_images)
 
 
@@ -145,7 +147,7 @@ def predict_to_txt(
     for img in sorted(Path(images_dir).rglob("*")):
         if img.suffix.lower() not in exts:
             continue
-        r = model.predict(str(img), imgsz=imgsz, conf=conf, iou=iou, verbose=False)[0]
+        r = model.predict(str(img), imgsz=imgsz, conf=conf, iou=iou, device=0, verbose=False)[0]
         lines = []
         for b in r.boxes:
             cls = int(b.cls.item())

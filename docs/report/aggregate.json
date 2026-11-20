@@ -1,0 +1,788 @@
+{
+  "ablation_low_texture_realism": {
+    "n_seeds": 1,
+    "n_real_train": 250,
+    "n_synth_train": 3000,
+    "hypothesis_refs": [
+      "H3"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.7834,
+        "std": 0.0,
+        "vals": [
+          0.7834
+        ]
+      },
+      "map50_95": {
+        "mean": 0.4978,
+        "std": 0.0,
+        "vals": [
+          0.4978
+        ]
+      },
+      "map50_small": {
+        "mean": 0.8543,
+        "std": 0.0,
+        "vals": [
+          0.8543
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8075,
+        "std": 0.0,
+        "vals": [
+          0.8075
+        ]
+      },
+      "map50_large": {
+        "mean": 0.6428,
+        "std": 0.0,
+        "vals": [
+          0.6428
+        ]
+      }
+    }
+  },
+  "ablation_no_bg_variation": {
+    "n_seeds": 1,
+    "n_real_train": 250,
+    "n_synth_train": 3000,
+    "hypothesis_refs": [
+      "H3"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.7964,
+        "std": 0.0,
+        "vals": [
+          0.7964
+        ]
+      },
+      "map50_95": {
+        "mean": 0.5149,
+        "std": 0.0,
+        "vals": [
+          0.5149
+        ]
+      },
+      "map50_small": {
+        "mean": 0.8729,
+        "std": 0.0,
+        "vals": [
+          0.8729
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8141,
+        "std": 0.0,
+        "vals": [
+          0.8141
+        ]
+      },
+      "map50_large": {
+        "mean": 0.6603,
+        "std": 0.0,
+        "vals": [
+          0.6603
+        ]
+      }
+    }
+  },
+  "ablation_no_light_random": {
+    "n_seeds": 1,
+    "n_real_train": 250,
+    "n_synth_train": 3000,
+    "hypothesis_refs": [
+      "H3"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.7998,
+        "std": 0.0,
+        "vals": [
+          0.7998
+        ]
+      },
+      "map50_95": {
+        "mean": 0.515,
+        "std": 0.0,
+        "vals": [
+          0.515
+        ]
+      },
+      "map50_small": {
+        "mean": 0.8571,
+        "std": 0.0,
+        "vals": [
+          0.8571
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8191,
+        "std": 0.0,
+        "vals": [
+          0.8191
+        ]
+      },
+      "map50_large": {
+        "mean": 0.6833,
+        "std": 0.0,
+        "vals": [
+          0.6833
+        ]
+      }
+    }
+  },
+  "ablation_no_pose_scale_random": {
+    "n_seeds": 1,
+    "n_real_train": 250,
+    "n_synth_train": 3000,
+    "hypothesis_refs": [
+      "H3"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.7735,
+        "std": 0.0,
+        "vals": [
+          0.7735
+        ]
+      },
+      "map50_95": {
+        "mean": 0.4496,
+        "std": 0.0,
+        "vals": [
+          0.4496
+        ]
+      },
+      "map50_small": {
+        "mean": 0.8565,
+        "std": 0.0,
+        "vals": [
+          0.8565
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8142,
+        "std": 0.0,
+        "vals": [
+          0.8142
+        ]
+      },
+      "map50_large": {
+        "mean": 0.5499,
+        "std": 0.0,
+        "vals": [
+          0.5499
+        ]
+      }
+    }
+  },
+  "mixed_250": {
+    "n_seeds": 1,
+    "n_real_train": 250,
+    "n_synth_train": 4000,
+    "hypothesis_refs": [
+      "H1"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.6427,
+        "std": 0.0,
+        "vals": [
+          0.6427
+        ]
+      },
+      "map50_95": {
+        "mean": 0.4046,
+        "std": 0.0,
+        "vals": [
+          0.4046
+        ]
+      },
+      "map50_small": {
+        "mean": 0.7378,
+        "std": 0.0,
+        "vals": [
+          0.7378
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.6777,
+        "std": 0.0,
+        "vals": [
+          0.6777
+        ]
+      },
+      "map50_large": {
+        "mean": 0.4698,
+        "std": 0.0,
+        "vals": [
+          0.4698
+        ]
+      }
+    }
+  },
+  "real_only_1000": {
+    "n_seeds": 1,
+    "n_real_train": 1000,
+    "n_synth_train": 0,
+    "hypothesis_refs": [
+      "H1",
+      "H2"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.9232,
+        "std": 0.0,
+        "vals": [
+          0.9232
+        ]
+      },
+      "map50_95": {
+        "mean": 0.6165,
+        "std": 0.0,
+        "vals": [
+          0.6165
+        ]
+      },
+      "map50_small": {
+        "mean": 0.949,
+        "std": 0.0,
+        "vals": [
+          0.949
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.934,
+        "std": 0.0,
+        "vals": [
+          0.934
+        ]
+      },
+      "map50_large": {
+        "mean": 0.8715,
+        "std": 0.0,
+        "vals": [
+          0.8715
+        ]
+      }
+    }
+  },
+  "real_only_100": {
+    "n_seeds": 1,
+    "n_real_train": 100,
+    "n_synth_train": 0,
+    "hypothesis_refs": [
+      "H1",
+      "H2"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.5888,
+        "std": 0.0,
+        "vals": [
+          0.5888
+        ]
+      },
+      "map50_95": {
+        "mean": 0.3328,
+        "std": 0.0,
+        "vals": [
+          0.3328
+        ]
+      },
+      "map50_small": {
+        "mean": 0.7752,
+        "std": 0.0,
+        "vals": [
+          0.7752
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.6517,
+        "std": 0.0,
+        "vals": [
+          0.6517
+        ]
+      },
+      "map50_large": {
+        "mean": 0.1722,
+        "std": 0.0,
+        "vals": [
+          0.1722
+        ]
+      }
+    }
+  },
+  "real_only_250": {
+    "n_seeds": 2,
+    "n_real_train": 250,
+    "n_synth_train": 0,
+    "hypothesis_refs": [
+      "H1",
+      "H2"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.8187,
+        "std": 0.0157,
+        "vals": [
+          0.8076,
+          0.8298
+        ]
+      },
+      "map50_95": {
+        "mean": 0.4995,
+        "std": 0.0143,
+        "vals": [
+          0.5096,
+          0.4894
+        ]
+      },
+      "map50_small": {
+        "mean": 0.8765,
+        "std": 0.003,
+        "vals": [
+          0.8744,
+          0.8786
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8446,
+        "std": 0.0235,
+        "vals": [
+          0.828,
+          0.8612
+        ]
+      },
+      "map50_large": {
+        "mean": 0.6688,
+        "std": 0.0382,
+        "vals": [
+          0.6418,
+          0.6958
+        ]
+      }
+    }
+  },
+  "real_only_500": {
+    "n_seeds": 1,
+    "n_real_train": 500,
+    "n_synth_train": 0,
+    "hypothesis_refs": [
+      "H1",
+      "H2"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.8559,
+        "std": 0.0,
+        "vals": [
+          0.8559
+        ]
+      },
+      "map50_95": {
+        "mean": 0.5607,
+        "std": 0.0,
+        "vals": [
+          0.5607
+        ]
+      },
+      "map50_small": {
+        "mean": 0.905,
+        "std": 0.0,
+        "vals": [
+          0.905
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8641,
+        "std": 0.0,
+        "vals": [
+          0.8641
+        ]
+      },
+      "map50_large": {
+        "mean": 0.7609,
+        "std": 0.0,
+        "vals": [
+          0.7609
+        ]
+      }
+    }
+  },
+  "real_only_50": {
+    "n_seeds": 1,
+    "n_real_train": 50,
+    "n_synth_train": 0,
+    "hypothesis_refs": [
+      "H1",
+      "H2"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.0387,
+        "std": 0.0,
+        "vals": [
+          0.0387
+        ]
+      },
+      "map50_95": {
+        "mean": 0.0263,
+        "std": 0.0,
+        "vals": [
+          0.0263
+        ]
+      },
+      "map50_small": {
+        "mean": 0.0029,
+        "std": 0.0,
+        "vals": [
+          0.0029
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.0073,
+        "std": 0.0,
+        "vals": [
+          0.0073
+        ]
+      },
+      "map50_large": {
+        "mean": 0.1982,
+        "std": 0.0,
+        "vals": [
+          0.1982
+        ]
+      }
+    }
+  },
+  "real_only_all": {
+    "n_seeds": 1,
+    "n_real_train": 5200,
+    "n_synth_train": 0,
+    "hypothesis_refs": [
+      "H1"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.9477,
+        "std": 0.0,
+        "vals": [
+          0.9477
+        ]
+      },
+      "map50_95": {
+        "mean": 0.6539,
+        "std": 0.0,
+        "vals": [
+          0.6539
+        ]
+      },
+      "map50_small": {
+        "mean": 0.9582,
+        "std": 0.0,
+        "vals": [
+          0.9582
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.9577,
+        "std": 0.0,
+        "vals": [
+          0.9577
+        ]
+      },
+      "map50_large": {
+        "mean": 0.922,
+        "std": 0.0,
+        "vals": [
+          0.922
+        ]
+      }
+    }
+  },
+  "synth_only": {
+    "n_seeds": 1,
+    "n_real_train": 0,
+    "n_synth_train": 4000,
+    "hypothesis_refs": [
+      "H2",
+      "H3"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.3872,
+        "std": 0.0,
+        "vals": [
+          0.3872
+        ]
+      },
+      "map50_95": {
+        "mean": 0.2222,
+        "std": 0.0,
+        "vals": [
+          0.2222
+        ]
+      },
+      "map50_small": {
+        "mean": 0.4794,
+        "std": 0.0,
+        "vals": [
+          0.4794
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.3758,
+        "std": 0.0,
+        "vals": [
+          0.3758
+        ]
+      },
+      "map50_large": {
+        "mean": 0.2739,
+        "std": 0.0,
+        "vals": [
+          0.2739
+        ]
+      }
+    }
+  },
+  "synth_pretrain_real_1000": {
+    "n_seeds": 1,
+    "n_real_train": 1000,
+    "n_synth_train": 4000,
+    "hypothesis_refs": [
+      "H1",
+      "H2",
+      "H4"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.9008,
+        "std": 0.0,
+        "vals": [
+          0.9008
+        ]
+      },
+      "map50_95": {
+        "mean": 0.6126,
+        "std": 0.0,
+        "vals": [
+          0.6126
+        ]
+      },
+      "map50_small": {
+        "mean": 0.9241,
+        "std": 0.0,
+        "vals": [
+          0.9241
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.9077,
+        "std": 0.0,
+        "vals": [
+          0.9077
+        ]
+      },
+      "map50_large": {
+        "mean": 0.8722,
+        "std": 0.0,
+        "vals": [
+          0.8722
+        ]
+      }
+    }
+  },
+  "synth_pretrain_real_100": {
+    "n_seeds": 1,
+    "n_real_train": 100,
+    "n_synth_train": 4000,
+    "hypothesis_refs": [
+      "H1",
+      "H2",
+      "H4"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.6696,
+        "std": 0.0,
+        "vals": [
+          0.6696
+        ]
+      },
+      "map50_95": {
+        "mean": 0.4037,
+        "std": 0.0,
+        "vals": [
+          0.4037
+        ]
+      },
+      "map50_small": {
+        "mean": 0.7627,
+        "std": 0.0,
+        "vals": [
+          0.7627
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.6987,
+        "std": 0.0,
+        "vals": [
+          0.6987
+        ]
+      },
+      "map50_large": {
+        "mean": 0.4819,
+        "std": 0.0,
+        "vals": [
+          0.4819
+        ]
+      }
+    }
+  },
+  "synth_pretrain_real_250": {
+    "n_seeds": 1,
+    "n_real_train": 250,
+    "n_synth_train": 4000,
+    "hypothesis_refs": [
+      "H1",
+      "H2",
+      "H4"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.7718,
+        "std": 0.0,
+        "vals": [
+          0.7718
+        ]
+      },
+      "map50_95": {
+        "mean": 0.4954,
+        "std": 0.0,
+        "vals": [
+          0.4954
+        ]
+      },
+      "map50_small": {
+        "mean": 0.8455,
+        "std": 0.0,
+        "vals": [
+          0.8455
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8098,
+        "std": 0.0,
+        "vals": [
+          0.8098
+        ]
+      },
+      "map50_large": {
+        "mean": 0.6319,
+        "std": 0.0,
+        "vals": [
+          0.6319
+        ]
+      }
+    }
+  },
+  "synth_pretrain_real_500": {
+    "n_seeds": 1,
+    "n_real_train": 500,
+    "n_synth_train": 4000,
+    "hypothesis_refs": [
+      "H1",
+      "H2",
+      "H4"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.8681,
+        "std": 0.0,
+        "vals": [
+          0.8681
+        ]
+      },
+      "map50_95": {
+        "mean": 0.5912,
+        "std": 0.0,
+        "vals": [
+          0.5912
+        ]
+      },
+      "map50_small": {
+        "mean": 0.9051,
+        "std": 0.0,
+        "vals": [
+          0.9051
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.8715,
+        "std": 0.0,
+        "vals": [
+          0.8715
+        ]
+      },
+      "map50_large": {
+        "mean": 0.819,
+        "std": 0.0,
+        "vals": [
+          0.819
+        ]
+      }
+    }
+  },
+  "synth_pretrain_real_50": {
+    "n_seeds": 1,
+    "n_real_train": 50,
+    "n_synth_train": 4000,
+    "hypothesis_refs": [
+      "H1",
+      "H2",
+      "H4"
+    ],
+    "metrics": {
+      "map50": {
+        "mean": 0.5431,
+        "std": 0.0,
+        "vals": [
+          0.5431
+        ]
+      },
+      "map50_95": {
+        "mean": 0.3094,
+        "std": 0.0,
+        "vals": [
+          0.3094
+        ]
+      },
+      "map50_small": {
+        "mean": 0.6812,
+        "std": 0.0,
+        "vals": [
+          0.6812
+        ]
+      },
+      "map50_medium": {
+        "mean": 0.5788,
+        "std": 0.0,
+        "vals": [
+          0.5788
+        ]
+      },
+      "map50_large": {
+        "mean": 0.2485,
+        "std": 0.0,
+        "vals": [
+          0.2485
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,7 @@
+project: miragebench
+classes: [drone]
+size_buckets: {small_max: 32, medium_max: 96}
+model: {arch: yolo11s, imgsz: 1280, sahi_enabled: false}
+train: {batch: 8, optimizer: auto, lr0: 0.01, patience: 20, augment_preset: small_object_v1, total_steps: 8000}
+split: {train: 0.80, val: 0.15, test: 0.05, group_aware: true, group_regex: '^(?P<group>.*?)(?:_frame|_f|_)\d+', seed: 0}
+seeds: [0]

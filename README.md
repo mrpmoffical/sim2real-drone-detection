@@ -57,19 +57,33 @@ Deney kolları (`configs/arms/`): `real_only_{N}`, `synth_only`,
 
 ---
 
-## Örnek rapor çıktısı
+## Sonuçlar
 
-> ⚠️ Aşağıdaki figürler **yer tutucu (fabrike) verilerle** üretilmiştir; rapor
-> hattının çalıştığını gösterir, gerçek deney bulgusu **değildir**. Gerçek sonuçlar
-> veri setleri ve GPU eğitimi ile üretilir.
+İlk tam tur: 17 kol, DUT Anti-UAV gerçek test seti (2200 görüntü), YOLOv11s @ 1280px.
+Tam analiz ve tablolar: [`docs/FINDINGS.md`](docs/FINDINGS.md).
 
-Sentetik üreticinin ürettiği kusursuz bbox (prosedürel quadcopter, gerçek render):
+**Öne çıkan bulgu — veri verimliliği (mAP@50):** Sentetik ön-eğitim, gerçek veri
+aşırı kıtken belirleyici; katkı veri arttıkça eriyor.
+
+| N (gerçek görüntü) | gerçek-only | sentetik ön-eğitim | kazanç |
+|---:|---:|---:|---:|
+| 50 | 0.039 | 0.543 | **+50.4** |
+| 100 | 0.589 | 0.670 | +8.1 |
+| 250 | 0.819 | 0.772 | −4.7 |
+| 500 | 0.856 | 0.868 | +1.2 |
+| 1000 | 0.923 | 0.901 | −2.2 |
+
+**Domain gap:** yalnız sentetikle eğitim gerçek testte 0.387 mAP@50 — en iyi gerçek
+modelin (0.948) 56 puan altında (büyük ama sıfır olmayan transfer).
+
+![veri verimliliği](docs/report/figures/data_efficiency.png)
+
+Sentetik üreticinin mesh projeksiyonundan ürettiği kusursuz bbox (prosedürel quadcopter):
 
 ![sentetik bbox](docs/figures/example_synth_bbox.png)
 
-Rapor hattının ürettiği veri-verimliliği eğrisi (hat demonstrasyonu):
-
-![veri verimliliği](docs/figures/example_data_efficiency.png)
+> Not: Bu tur çoğu kolda tek tohumla koşuldu (varyans tahmini yok). Titiz bir sonuç
+> için 3 tohumla tekrar önerilir — bkz. `docs/FINDINGS.md` §7-8.
 
 ---
 

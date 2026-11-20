@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from pathlib import Path
 
 from ..config import load_arm, load_base
 from .runner import prepare_arm_data, run_arm_seed
@@ -53,6 +54,10 @@ def main(argv: list[str] | None = None) -> int:
     for arm_path in args.arm:
         arm = load_arm(arm_path)
         for seed in seeds:
+            result_json = Path(args.results) / f"{arm.name}_seed{seed}.json"
+            if not args.dry_run and result_json.exists():
+                print(f"{arm.name} seed{seed}: zaten tamamlanmış, atlanıyor")
+                continue
             if args.dry_run:
                 prep = prepare_arm_data(base, arm, args.real_root, synth_roots, args.work, seed)
                 print(json.dumps({

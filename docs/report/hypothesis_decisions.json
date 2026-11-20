@@ -1,0 +1,42 @@
+[
+  {
+    "hypothesis": "H1",
+    "verdict": "desteklendi",
+    "detail": "N<=250'de en büyük kazanım 50.4 puan (N=50)",
+    "pairs": [
+      {
+        "N": 100,
+        "synth_pretrain": 0.6696,
+        "real_only": 0.5888,
+        "gain_pts": 8.08
+      },
+      {
+        "N": 250,
+        "synth_pretrain": 0.7718,
+        "real_only": 0.8187,
+        "gain_pts": -4.69
+      },
+      {
+        "N": 50,
+        "synth_pretrain": 0.5431,
+        "real_only": 0.0387,
+        "gain_pts": 50.44
+      }
+    ]
+  },
+  {
+    "hypothesis": "H2",
+    "verdict": "desteklendi",
+    "detail": "synth_only mAP@50=0.387, en iyi real_only=0.948, açık=56.0 puan"
+  },
+  {
+    "hypothesis": "H3",
+    "verdict": "desteklenmedi",
+    "detail": "en önemli faktör 'no_pose_scale_random'; sıralama=[('no_pose_scale_random', -0.0017), ('low_texture_realism', -0.0116), ('no_bg_variation', -0.0246), ('no_light_random', -0.028)]"
+  },
+  {
+    "hypothesis": "H4",
+    "verdict": "desteklenmedi",
+    "detail": "boyut başına kazanım (puan)={'small': -2.49, 'medium': -2.63, 'large': 0.07}; en yüksek=large"
+  }
+]

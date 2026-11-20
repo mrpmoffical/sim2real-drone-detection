@@ -1,16 +1,13 @@
 # Veri ve çıktılar
-data/
-work/
-results/
-runs/
+/data/
+/work/
+/results/
+/runs/
 *.engine
 *.pt
 !**/weights/.gitkeep
 
 # Üretilen sentetik veri ve raporlar (örnek figürler hariç)
-docs/report/*.json
-docs/report/*.csv
-docs/report/report.md
 
 # Python
 __pycache__/
