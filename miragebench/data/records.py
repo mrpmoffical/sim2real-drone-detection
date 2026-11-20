@@ -43,7 +43,7 @@ class ImageRecord:
     width: int
     height: int
     boxes: list[Box] = field(default_factory=list)
-    source: str = ""          # adaptör/köken etiketi (ör. 'anti_uav')
+    source: str = ""          # adaptör/köken etiketi (ör. 'real', 'synth')
     group: str | None = None  # grup-farkında split için (ör. video kimliği)
 
     def size_bucket_counts(self, small_max: int = 32, medium_max: int = 96) -> dict[str, int]:

@@ -5,7 +5,7 @@ Desteklenen formatlar:
   - COCO        : tek annotations.json (bbox [x,y,w,h] piksel, xywh)
   - Pascal VOC  : her görüntü için .xml (bndbox xmin,ymin,xmax,ymax piksel)
 
-Açık drone setleri (Anti-UAV, MAV-VID, Drone-vs-Bird) bu üç formattan birinde ya
+Açık drone tespit setleri genelde bu üç formattan birinde ya
 da ona kolayca indirgenebilir biçimde gelir. Yeni bir format için yalnızca yeni
 bir `iter_*` fonksiyonu eklemek yeterlidir; hattın gerisi değişmez.
 

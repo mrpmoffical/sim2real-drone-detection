@@ -206,7 +206,7 @@ _TEMPLATE = r"""<!DOCTYPE html>
 <body>
 <div class="wrap">
   <h1>MirageBench — Sonuç Panosu</h1>
-  <p class="sub">Küçük drone tespitinde sentetik verinin gerçek veri açığını ne kadar kapattığını ölçen benchmark · DUT Anti-UAV test seti · YOLOv11s</p>
+  <p class="sub">Küçük drone tespitinde sentetik verinin gerçek veri açığını ne kadar kapattığını ölçen benchmark · YOLOv11s</p>
 
   <div class="tiles" id="tiles"></div>
 

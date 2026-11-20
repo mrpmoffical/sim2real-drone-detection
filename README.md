@@ -115,7 +115,7 @@ python -m miragebench.synth.cli --out data/synth/full            --n 20000 --fac
 python -m miragebench.synth.cli --out data/synth/no_light_random --n 20000 --factor no_light_random
 
 # 2) Gerçek seti içeri al (grup-farkında split)
-python -m miragebench.data.cli --format yolo --root /veri/anti_uav --out data/real --merge-classes
+python -m miragebench.data.cli --format yolo --root /veri/drone_dataset --out data/real --merge-classes
 
 # 3) Veri kompozisyonunu GPU'suz doğrula
 python -m miragebench.experiment.cli --dry-run \

@@ -1,7 +1,7 @@
 """`mb-ingest`: gerçek veri setini okur, grup-farkında böler, YOLO düzenine yazar.
 
 Örnek:
-  mb-ingest --format yolo --root /data/anti_uav --out data/real --merge-classes
+  mb-ingest --format yolo --root /data/drone_dataset --out data/real --merge-classes
   mb-ingest --format coco --ann ann.json --images imgs/ --out data/real
 """
 
